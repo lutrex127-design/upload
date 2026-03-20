@@ -2,235 +2,149 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Auftrag">
   <title>Neuer Auftrag</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body {
-      background: #0f172a;
-      color: #f1f5f9;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      min-height: 100vh;
-      padding: 24px 16px 60px;
-    }
-    .header { margin-bottom: 28px; }
-    .header h1 { font-size: 26px; font-weight: 800; }
-    .header p { color: #64748b; font-size: 14px; margin-top: 4px; }
-    .group { margin-bottom: 16px; }
-    label {
-      display: block;
-      font-size: 11px;
-      font-weight: 700;
-      color: #64748b;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      margin-bottom: 6px;
-    }
-    input {
-      width: 100%;
-      background: #1e293b;
-      border: 1.5px solid #334155;
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-size: 16px;
-      color: #f1f5f9;
-      outline: none;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-    }
-    input:focus { border-color: #6366f1; }
-    input::placeholder { color: #475569; }
-    .row { display: grid; grid-template-columns: 100px 1fr; gap: 10px; }
-    .divider {
-      height: 1px;
-      background: #1e293b;
-      margin: 20px 0;
-    }
-    .section-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #94a3b8;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .btn {
-      width: 100%;
-      background: #6366f1;
-      color: white;
-      border: none;
-      border-radius: 14px;
-      padding: 17px;
-      font-size: 17px;
-      font-weight: 700;
-      margin-top: 8px;
-      cursor: pointer;
-      transition: transform 0.1s, background 0.2s;
-    }
-    .btn:active { transform: scale(0.97); background: #4f46e5; }
-    .btn:disabled { background: #334155; color: #475569; }
-
-    /* Erfolgsscreen */
-    #successView {
-      display: none;
-      text-align: center;
-      padding: 60px 0 30px;
-    }
-    .success-icon { font-size: 72px; margin-bottom: 16px; }
-    #successView h2 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-    #successView p { color: #64748b; font-size: 15px; line-height: 1.6; margin-bottom: 8px; }
-
-    .steps {
-      background: #1e293b;
-      border-radius: 14px;
-      padding: 16px;
-      margin: 20px 0;
-      text-align: left;
-    }
-    .steps p { color: #94a3b8; font-size: 14px; margin-bottom: 0; }
-    .steps strong { color: #f1f5f9; }
-    .step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
-    .step:last-child { margin-bottom: 0; }
-    .step-num {
-      width: 22px; height: 22px;
-      background: #6366f1;
-      border-radius: 50%;
-      font-size: 12px;
-      font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .step-text { font-size: 14px; color: #cbd5e1; line-height: 1.5; }
-
-    .btn-secondary {
-      width: 100%;
-      background: transparent;
-      color: #6366f1;
-      border: 1.5px solid #6366f1;
-      border-radius: 14px;
-      padding: 15px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f172a; min-height: 100vh; }
+    .header { background: linear-gradient(135deg, #1e3a5f 0%, #1d4ed8 100%); padding: 52px 24px 24px; text-align: center; }
+    .header h1 { color: white; font-size: 22px; font-weight: 700; }
+    .header p { color: rgba(255,255,255,0.65); font-size: 13px; margin-top: 4px; }
+    .form-container { padding: 20px 16px 40px; max-width: 480px; margin: 0 auto; }
+    .section-title { color: #94a3b8; font-size: 11px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; margin: 24px 0 10px; }
+    .card { background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid #334155; }
+    .field { display: flex; align-items: center; padding: 14px 16px; border-bottom: 1px solid #334155; gap: 12px; }
+    .field:last-child { border-bottom: none; }
+    .field-icon { font-size: 18px; width: 24px; text-align: center; flex-shrink: 0; }
+    .field-content { flex: 1; }
+    .field-label { color: #64748b; font-size: 11px; font-weight: 500; margin-bottom: 3px; }
+    .field.required .field-label::after { content: ' *'; color: #ef4444; }
+    .field input { background: transparent; border: none; outline: none; color: #f1f5f9; font-size: 16px; width: 100%; font-family: inherit; }
+    .field input::placeholder { color: #475569; }
+    .price-row { display: flex; align-items: center; }
+    .price-row input { flex: 1; }
+    .price-symbol { color: #64748b; font-size: 16px; font-weight: 600; margin-left: 4px; }
+    .btn-save { width: 100%; margin-top: 28px; padding: 18px; background: linear-gradient(135deg, #1d4ed8, #2563eb); color: white; border: none; border-radius: 16px; font-size: 17px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-save:active { opacity: 0.85; }
+    .btn-clear { width: 100%; margin-top: 12px; padding: 14px; background: transparent; color: #64748b; border: 1px solid #334155; border-radius: 16px; font-size: 15px; font-weight: 500; cursor: pointer; }
+    .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px); background: #22c55e; color: white; padding: 14px 24px; border-radius: 100px; font-size: 15px; font-weight: 600; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); white-space: nowrap; z-index: 100; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .hint { text-align: center; color: #475569; font-size: 12px; margin-top: 16px; line-height: 1.6; }
   </style>
 </head>
 <body>
-
-<div id="formView">
-  <div class="header">
-    <h1>Neuer Auftrag</h1>
-    <p>Kundendaten erfassen</p>
+<div class="header">
+  <h1>🔑 Neuer Auftrag</h1>
+  <p>Kundendaten erfassen</p>
+</div>
+<div class="form-container">
+  <div class="section-title">Kunde</div>
+  <div class="card">
+    <div class="field required">
+      <div class="field-icon">👤</div>
+      <div class="field-content">
+        <div class="field-label">Name</div>
+        <input id="name" type="text" placeholder="Max Müller" autocomplete="off">
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-icon">📞</div>
+      <div class="field-content">
+        <div class="field-label">Telefon</div>
+        <input id="phone" type="tel" placeholder="0151 12345678" autocomplete="off">
+      </div>
+    </div>
   </div>
-
-  <form id="form">
-    <p class="section-title">Kunde</p>
-
-    <div class="group">
-      <label>Name *</label>
-      <input name="name" placeholder="Max Müller" required autocomplete="name">
-    </div>
-
-    <div class="group">
-      <label>Straße + Hausnummer</label>
-      <input name="street" placeholder="Bahnhofstr. 5" autocomplete="street-address">
-    </div>
-
-    <div class="group row">
-      <div>
-        <label>PLZ</label>
-        <input name="zip" placeholder="55116" inputmode="numeric" autocomplete="postal-code">
-      </div>
-      <div>
-        <label>Stadt</label>
-        <input name="city" placeholder="Mainz" autocomplete="address-level2">
+  <div class="section-title">Adresse</div>
+  <div class="card">
+    <div class="field">
+      <div class="field-icon">🏠</div>
+      <div class="field-content">
+        <div class="field-label">Straße + Nr.</div>
+        <input id="street" type="text" placeholder="Bahnhofstr. 5" autocomplete="off">
       </div>
     </div>
-
-    <div class="group">
-      <label>Telefon</label>
-      <input name="phone" placeholder="0151 12345678" type="tel" autocomplete="tel">
+    <div class="field">
+      <div class="field-icon">📍</div>
+      <div class="field-content">
+        <div class="field-label">PLZ + Stadt</div>
+        <input id="city" type="text" placeholder="55116 Mainz" autocomplete="off">
+      </div>
     </div>
-
-    <div class="divider"></div>
-    <p class="section-title">Leistung</p>
-
-    <div class="group">
-      <label>Beschreibung</label>
-      <input name="service" placeholder="z.B. Türöffnung">
+  </div>
+  <div class="section-title">Leistung</div>
+  <div class="card">
+    <div class="field required">
+      <div class="field-icon">🔧</div>
+      <div class="field-content">
+        <div class="field-label">Beschreibung</div>
+        <input id="service" type="text" placeholder="Türöffnung" autocomplete="off">
+      </div>
     </div>
-
-    <div class="group">
-      <label>Preis in €</label>
-      <input name="price" placeholder="80" inputmode="decimal">
+    <div class="field">
+      <div class="field-icon">💶</div>
+      <div class="field-content">
+        <div class="field-label">Preis</div>
+        <div class="price-row">
+          <input id="price" type="number" placeholder="80" inputmode="decimal" step="0.01" min="0">
+          <span class="price-symbol">€</span>
+        </div>
+      </div>
     </div>
-
-    <button type="submit" class="btn" id="btn">Auftrag speichern</button>
-  </form>
+  </div>
+  <button class="btn-save" onclick="saveAuftrag()">💾 Auftrag speichern</button>
+  <button class="btn-clear" onclick="clearForm()">Formular leeren</button>
+  <p class="hint">Die Datei wird in iCloud Drive gespeichert<br>und beim nächsten PC-Start importiert.</p>
 </div>
-
-<div id="successView">
-  <div class="success-icon">✅</div>
-  <h2>Auftrag gespeichert!</h2>
-  <p>Datei wurde in iCloud Drive gespeichert.<br>Beim nächsten PC-Start automatisch eingetragen.</p>
-
-  <button class="btn" onclick="neuerAuftrag()">Neuer Auftrag</button>
-  <button class="btn-secondary" onclick="nochmalSpeichern()">Nochmal herunterladen</button>
-</div>
-
+<div class="toast" id="toast">✅ Auftrag gespeichert!</div>
 <script>
-  let lastData = null
-
-  document.getElementById('form').addEventListener('submit', function(e) {
-    e.preventDefault()
-    const fd = new FormData(e.target)
-    const price = parseFloat((fd.get('price') || '0').replace(',', '.')) || 0
-
-    lastData = {
-      name:        fd.get('name') || '',
-      street:      fd.get('street') || '',
-      zip:         fd.get('zip') || '',
-      city:        fd.get('city') || '',
-      phone:       fd.get('phone') || '',
-      service:     fd.get('service') || '',
-      price_cents: Math.round(price * 100),
-      timestamp:   new Date().toISOString()
-    }
-
-    downloadJSON(lastData)
-    document.getElementById('formView').style.display = 'none'
-    document.getElementById('successView').style.display = 'block'
-    window.scrollTo(0, 0)
-  })
-
-  function downloadJSON(data) {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
-    const url  = URL.createObjectURL(blob)
-    const a    = document.createElement('a')
-    const ts   = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)
-    a.href     = url
-    a.download = `Auftrag-${ts}.json`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    setTimeout(() => URL.revokeObjectURL(url), 1000)
-  }
-
-  function neuerAuftrag() {
-    document.getElementById('form').reset()
-    document.getElementById('successView').style.display = 'none'
-    document.getElementById('formView').style.display = 'block'
-    window.scrollTo(0, 0)
-  }
-
-  function nochmalSpeichern() {
-    if (lastData) downloadJSON(lastData)
-  }
+function saveAuftrag() {
+  const name = document.getElementById('name').value.trim();
+  if (!name) { document.getElementById('name').focus(); return; }
+  const priceRaw = parseFloat(document.getElementById('price').value) || 0;
+  const priceCents = Math.round(priceRaw * 100);
+  const cityRaw = document.getElementById('city').value.trim();
+  let zip = '', city = '';
+  const cityMatch = cityRaw.match(/^(\d{5})\s+(.+)$/);
+  if (cityMatch) { zip = cityMatch[1]; city = cityMatch[2]; } else { city = cityRaw; }
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const dateStr = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+  const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  const data = {
+    name,
+    street: document.getElementById('street').value.trim(),
+    zip, city,
+    phone: document.getElementById('phone').value.trim(),
+    service: document.getElementById('service').value.trim(),
+    price_cents: priceCents,
+    service_date: dateStr,
+    service_time: timeStr,
+    timestamp: now.toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Auftrag-${dateStr}-${timeStr.replace(':', '')}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast();
+  setTimeout(() => clearForm(), 1200);
+}
+function clearForm() {
+  ['name','phone','street','city','service','price'].forEach(id => document.getElementById(id).value = '');
+}
+function showToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 </script>
 </body>
 </html>
